@@ -1,0 +1,80 @@
+In Apache Spark, there are several types of joins that you can perform on DataFrames:
+
+1. Inner Join: Returns only the rows that have matching values in both DataFrames.
+2. Outer Join (Full Outer Join): Returns all rows from both DataFrames, with nulls where there is no match.
+3. Left Outer Join: Returns all rows from the left DataFrame, and the matched rows from the right DataFrame. If there is no match, the result is null.
+4. Right Outer Join: Returns all rows from the right DataFrame, and the matched rows from the left DataFrame. If there is no match, the result is null.
+5. Left Semi Join: Returns only the rows from the left DataFrame that have a matching row in the right DataFrame.
+6. Left Anti Join: Returns only the rows from the left DataFrame that do not have a matching row in the right DataFrame.
+7. Cross Join (Cartesian Join): Returns the Cartesian product of the rows from both DataFrames.
+
+example:
+
+from pyspark.sql import SparkSession
+
+# Create SparkSession
+spark = SparkSession.builder \
+    .appName("JoinDemo") \
+    .getOrCreate()
+
+# Sample data
+data1 = [("John", 25),
+         ("Alice", 30),
+         ("Bob", 35)]
+
+data2 = [("John", "New York"),
+         ("Alice", "Chicago"),
+         ("Eve", "Los Angeles")]
+
+# Define schema for DataFrame 1
+schema1 = ["name", "age"]
+
+# Define schema for DataFrame 2
+schema2 = ["name", "city"]
+
+# Create DataFrames with specified column names
+df1 = spark.createDataFrame(data1, schema1)
+df2 = spark.createDataFrame(data2, schema2)
+
+# Perform inner join
+inner_join_df = df1.join(df2, "name", "inner")
+
+# Perform outer join
+outer_join_df = df1.join(df2, "name", "outer")
+
+# Perform left outer join
+left_outer_join_df = df1.join(df2, "name", "left_outer")
+
+# Perform right outer join
+right_outer_join_df = df1.join(df2, "name", "right_outer")
+
+# Perform left semi join
+left_semi_join_df = df1.join(df2, "name", "left_semi")
+
+# Perform left anti join
+left_anti_join_df = df1.join(df2, "name", "left_anti")
+
+# Perform cross join
+cross_join_df = df1.crossJoin(df2)
+
+# Show results
+print("Inner Join:")
+inner_join_df.show()
+
+print("Outer Join:")
+outer_join_df.show()
+
+print("Left Outer Join:")
+left_outer_join_df.show()
+
+print("Right Outer Join:")
+right_outer_join_df.show()
+
+print("Left Semi Join:")
+left_semi_join_df.show()
+
+print("Left Anti Join:")
+left_anti_join_df.show()
+
+print("Cross Join:")
+cross_join_df.show()
