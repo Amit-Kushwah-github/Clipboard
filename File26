@@ -1,3 +1,35 @@
+koon[26/02, 10:59 am] Mohammed Sayeed Sir Trainer: https://docs.google.com/forms/d/e/1FAIpQLSecn3qjfXGvhr2C8h_okike5Nia1Umvsy5ZCWqFROmHLZEWjA/viewform?usp=sf_link
+[26/02, 11:01 am] Mohammed Sayeed Sir Trainer: rom pyspark.sql import SparkSession
+
+# Create SparkSession
+spark = SparkSession.builder \
+    .appName("DataFrameToTableDemo") \
+    .enableHiveSupport() \
+    .getOrCreate()
+
+# Sample data
+data = [("John", 30, "New York"),
+        ("Alice", 25, "Chicago"),
+        ("Bob", 40, "San Francisco")]
+
+# Define DataFrame schema
+schema = ["name", "age", "city"]
+
+# Create DataFrame
+df = spark.createDataFrame(data, schema)
+
+# Save DataFrame as a table in Hive metastore
+df.write.saveAsTable("people")
+
+# Run SQL query against the table
+result = spark.sql("SELECT * FROM people WHERE age > 30")
+
+# Show query result
+result.show()
+
+
+
+
 [26/02, 10:59 am] Mohammed Sayeed Sir Trainer: https://docs.google.com/forms/d/e/1FAIpQLSecn3qjfXGvhr2C8h_okike5Nia1Umvsy5ZCWqFROmHLZEWjA/viewform?usp=sf_link
 [26/02, 11:01 am] Mohammed Sayeed Sir Trainer: rom pyspark.sql import SparkSession
 
